@@ -8,7 +8,7 @@ loadProducts();
 
 // show all product in UI 
 const showProducts = (products) => {
-  const allProducts = products.map((pd) => pd);
+  const allProducts = products.map((produtDetails) => produtDetails);
   for (const product of allProducts) {
     // const image = product.images;
     const div = document.createElement("div");
@@ -19,13 +19,60 @@ const showProducts = (products) => {
       </div>
       <h3>${product.title}</h3>
       <p>Category: ${product.category}</p>
+      <p> Rating Given: <span style = "color:#FFD700; font-weight:bold"> ${product.rating.count}</span>,  Averate Rate: <span style = "color:#FFD700; font-weight:bold">${product.rating.rate}</span> </p>
       <h2>Price: $ ${product.price}</h2>
       <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
-      <button id="details-btn" class="btn btn-danger">Details</button></div>
+      <button id="details-btn" onclick = 'details(${product.price},${product.rating.rate})' class="btn btn-danger">Details</button></div>
       `;
     document.getElementById("all-products").appendChild(div);
+
+
   }
+
 };
+const details = (price, rate) => {
+
+  const single = document.getElementById("single-data");
+  single.classList.add("single-product");
+  if (rate < 3) {
+    single.innerHTML = `
+    <h2> Price: $ ${price} </h2>
+   <h4> Rating: ${rate} 
+   <i class="fas fa-star text-warning"></i>
+   <i class="fas fa-star text-warning"></i>
+   <i class="fas fa-star text-warning"></i>
+   <i class="far fa-star text-warning"></i>
+   <i class="far fa-star text-warning"></i>
+   </h4>
+  `
+  }
+  else {
+    single.innerHTML = `
+    <h2> Price: $ ${price} </h2>
+   <h4> Rating: ${rate} 
+   <i class="fas fa-star text-warning"></i>
+   <i class="fas fa-star text-warning"></i>
+   <i class="fas fa-star text-warning"></i>
+   <i class="fas fa-star-half-alt text-warning"></i>
+   <i class="far fa-star text-warning"></i>
+   </h4>
+  `
+  }
+}
+/* const singleData = singleProduct => {
+  console.log(singleProduct)
+
+  const dataDiv = document.getElementById("single-data")
+  const newDiv = document.createElement('div')
+  newDiv.innerHTML = `
+    <h2> Category: ${singleProduct.category} </h2>
+  `
+  dataDiv.appendChild(newDiv);
+  // dataDiv.innerHTML = ''
+} */
+
+
+
 let count = 0;
 const addToCart = (id, price) => {
   // console.log(id, price)
@@ -85,8 +132,14 @@ const updateTotal = () => {
     getInputValue("price") + getInputValue("delivery-charge") +
     getInputValue("total-tax");
 
-  console.log(getInputValue("price"), getInputValue("delivery-charge"), getInputValue("total-tax"))
+  /*   console.log(getInputValue("price"), getInputValue("delivery-charge"), getInputValue("total-tax")) */
 
 
   document.getElementById("total").innerText = grandTotal.toFixed(2);
 };
+
+fetch('https://fakestoreapi.com/products/1')
+  .then(res => res.json())
+  .then(json => console.log(json))
+
+
