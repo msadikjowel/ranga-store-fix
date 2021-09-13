@@ -8,32 +8,35 @@ loadProducts();
 
 // show all product in UI 
 const showProducts = (products) => {
-  const allProducts = products.map((produtDetails) => produtDetails);
+  const allProducts = products.map((productDetails) => productDetails);
   for (const product of allProducts) {
     // const image = product.images;
     const div = document.createElement("div");
     div.classList.add("product");
-    div.innerHTML = `<div class="single-product">
-      <div>
+    div.innerHTML = `<div class="single-product col">
     <img class="product-image" src=${product.image}></img>
-      </div>
+    <div class = "">
       <h3>${product.title}</h3>
       <p>Category: ${product.category}</p>
-      <p> Rating Given: <span style = "color:#FFD700; font-weight:bold"> ${product.rating.count}</span>,  Averate Rate: <span style = "color:#FFD700; font-weight:bold">${product.rating.rate}</span> </p>
+      <p> Rating Given: <span style = "color:#008000; font-weight:bold"> ${product.rating.count}</span>,  Averate Rate: <span style = "color:#008000; font-weight:bold">${product.rating.rate}</span> </p>
       <h2>Price: $ ${product.price}</h2>
       <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
-      <button id="details-btn" onclick = 'details(${product.price},${product.rating.rate})' class="btn btn-danger">Details</button></div>
+      <button id="details-btn" onclick = 'details(${product.price},${product.rating.rate})' class="btn btn-danger">Details</button>
+      </div>
+      </div>
       `;
     document.getElementById("all-products").appendChild(div);
-
-
   }
 
 };
+
+/* BONUS part- single detail result after details button clicked */
 const details = (price, rate) => {
 
   const single = document.getElementById("single-data");
   single.classList.add("single-product");
+
+  // adding rating star icon using condition
   if (rate < 3) {
     single.innerHTML = `
     <h2> Price: $ ${price} </h2>
@@ -72,7 +75,7 @@ const details = (price, rate) => {
 } */
 
 
-
+// update total product that clicked to add to cart
 let count = 0;
 const addToCart = (id, price) => {
   // console.log(id, price)
@@ -138,8 +141,9 @@ const updateTotal = () => {
   document.getElementById("total").innerText = grandTotal.toFixed(2);
 };
 
+/*
 fetch('https://fakestoreapi.com/products/1')
   .then(res => res.json())
-  .then(json => console.log(json))
+  .then(json => console.log(json)) */
 
 
